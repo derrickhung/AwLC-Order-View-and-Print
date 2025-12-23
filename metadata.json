@@ -1,0 +1,5 @@
+{
+  "name": "Wix Order Manager & Printer",
+  "description": "A static web application to parse Wix order CSVs, manage shipments, and print A5 delivery slips with payment status alerts.",
+  "requestFramePermissions": []
+}
