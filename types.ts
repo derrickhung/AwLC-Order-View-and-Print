@@ -19,9 +19,9 @@ export interface Order {
   email: string;
   note: string;
   deliveryMethod: string;
-  recipientName: string; // Formatted Last First
+  recipientName: string; 
   recipientPhone: string;
-  formattedAddress: string; // Full formatted address with Zip
+  formattedAddress: string; 
   addressCity: string;
   addressFull: string;
   zipCode: string;
@@ -29,6 +29,14 @@ export interface Order {
   shippingFee: number;
   total: number;
   items: OrderItem[];
+}
+
+export interface ManualEntry {
+  id: string;
+  recipientName: string;
+  recipientPhone: string;
+  formattedAddress: string;
+  zipCode: string;
 }
 
 // Raw structure from CSV

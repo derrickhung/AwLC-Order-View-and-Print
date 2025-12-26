@@ -26,9 +26,10 @@ const PrintLayout: React.FC<PrintLayoutProps> = ({ orders }) => {
               <h1 className="text-2xl font-bold">訂單出貨單</h1>
               <p className="text-sm mt-1">訂單編號: <span className="font-mono font-bold text-lg">{order.id}</span></p>
             </div>
-            <div className="text-right text-xs">
-              <p>{order.date}</p>
-              <p>{order.deliveryMethod}</p>
+            <div className="text-right">
+              {/* Increased font size for date and time */}
+              <p className="text-xl font-bold">{order.date} {order.time}</p>
+              <p className="text-xs text-gray-500 mt-1">{order.deliveryMethod}</p>
             </div>
           </div>
 
@@ -66,14 +67,13 @@ const PrintLayout: React.FC<PrintLayoutProps> = ({ orders }) => {
              </div>
           )}
 
-          {/* Items Table */}
+          {/* Items Table - No Prices */}
           <div className="flex-grow">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-400">
-                  <th className="text-left py-1 w-2/3">商品名稱 / 變體</th>
+                  <th className="text-left py-1 w-5/6">商品名稱 / 變體</th>
                   <th className="text-right py-1 w-1/6">數量</th>
-                  <th className="text-right py-1 w-1/6">單價</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -88,29 +88,16 @@ const PrintLayout: React.FC<PrintLayoutProps> = ({ orders }) => {
                         <div className="text-[10px] text-gray-400 font-mono">{item.sku}</div>
                       )}
                     </td>
-                    <td className="py-2 text-right align-top">{item.quantity}</td>
-                    <td className="py-2 text-right align-top font-mono">
-                      {item.price > 0 ? item.price : "-"}
-                    </td>
+                    <td className="py-2 text-right align-top text-base font-bold">{item.quantity}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          {/* Footer Totals */}
+          {/* Footer - Removed Prices */}
           <div className="mt-4 pt-2 border-t border-gray-800">
-             <div className="flex justify-end space-x-8 text-sm">
-                <div className="text-right">
-                  <span className="text-gray-500 block text-xs">運費</span>
-                  <span>{order.shippingFee}</span>
-                </div>
-                <div className="text-right">
-                  <span className="text-gray-500 block text-xs">總計</span>
-                  <span className="font-bold text-lg">${order.total}</span>
-                </div>
-             </div>
-             <div className="text-[10px] text-center text-gray-400 mt-6">
+             <div className="text-[10px] text-center text-gray-400 mt-2">
                 Thank you for your purchase!
              </div>
           </div>

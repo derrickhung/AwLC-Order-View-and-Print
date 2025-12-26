@@ -1,3 +1,4 @@
+
 import Papa from "papaparse";
 import { Order, OrderItem, RawCsvRow } from "./types";
 
@@ -19,19 +20,19 @@ export const parseAndGroupOrders = (csvString: string): Order[] => {
 
     const orderId = row["訂單編號"];
 
-    // Format Name: Swap "First Last" to "LastFirst" if space detected
-    const rawName = row["收件者名稱"] || "";
-    let formattedName = rawName;
+    // Format Name: If there's a space, it's likely "Given Surname". 
+    // We swap them to "SurnameGiven" and remove all spaces.
+    const rawName = (row["收件者名稱"] || "").trim();
+    let formattedName = "";
     if (rawName.includes(" ")) {
-      const parts = rawName.split(" ").filter(p => p.trim() !== "");
-      if (parts.length === 2) {
-        // Assume format is "First Last", swap to "LastFirst"
-        formattedName = `${parts[1]}${parts[0]}`;
-      } else if (parts.length > 2) {
-         // Fallback for complex names, remove spaces
-         formattedName = parts.join("");
-      }
+        const parts = rawName.split(/\s+/);
+        // Reverse parts to put Surname (usually the last part in Western/Wix export format) at the front
+        formattedName = parts.reverse().join("");
+    } else {
+        formattedName = rawName;
     }
+    // Final cleanup to ensure absolutely no spaces
+    formattedName = formattedName.replace(/\s+/g, "");
 
     // Clean Phone: Remove all quotes and whitespace
     const rawPhone = row["收件者電話"] || "";
